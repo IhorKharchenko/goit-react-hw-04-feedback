@@ -1,9 +1,14 @@
-import { Counter } from './Counter/Counter';
+// import { Counter } from './Counter/Counter';
+// import { Dropdown } from './Dropdown/Dropdown';
+
+import { TodoList } from './TodoList';
 
 export const App = () => {
   return (
     <div>
-      <Counter />
+      {/* <Counter />
+      <Dropdown /> */}
+      <TodoList />
     </div>
   );
 };
