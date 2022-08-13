@@ -13,11 +13,13 @@ export class App extends Component {
   leaveFeedback = element => {
     const { value } = element.currentTarget;
     this.setState(prevState => ({
+      ...prevState,
       [value]: prevState[value] + 1,
     }));
     this.countTotalFeedback();
     this.countPositiveFeedbackPercentage();
   };
+
   // handleGood = () => {
   //   this.setState(prevState => ({
   //     good: prevState.good + 1,
