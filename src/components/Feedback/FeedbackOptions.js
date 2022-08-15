@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { StyledButton } from './Feedback.styled';
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return options.map((option, idx) => {
     return (
-      <button
+      <StyledButton
         type="button"
         key={idx}
         value={option}
@@ -12,7 +14,12 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
         }}
       >
         {option}
-      </button>
+      </StyledButton>
     );
   });
+};
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.array,
+  onLeaveFeedback: PropTypes.func,
 };

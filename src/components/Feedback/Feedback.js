@@ -3,7 +3,8 @@ import { FeedbackOptions } from './FeedbackOptions';
 import { Notification } from './Notification';
 import { Section } from './Section';
 import { Statistics } from './Statistics';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { StyledFeedback } from './Feedback.styled';
 
 export const Feedback = ({
   options,
@@ -15,11 +16,11 @@ export const Feedback = ({
   positivePercentage,
 }) => {
   return (
-    <div>
+    <StyledFeedback>
       <Section title="Please, leave feedback">
         <FeedbackOptions options={options} onLeaveFeedback={onLeaveFeedback} />
       </Section>
-      <Section>
+      <Section title="Statistics">
         {total !== 0 ? (
           <Statistics
             good={good}
@@ -32,6 +33,16 @@ export const Feedback = ({
           <Notification message="There is no feedback" />
         )}
       </Section>
-    </div>
+    </StyledFeedback>
   );
+};
+
+Feedback.propTypes = {
+  options: PropTypes.array.isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  positivePercentage: PropTypes.number.isRequired,
 };
