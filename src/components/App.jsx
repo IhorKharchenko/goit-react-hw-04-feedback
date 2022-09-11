@@ -1,52 +1,55 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Feedback } from './Feedback';
+export const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const options = ['good', 'neutral', 'bad'];
 
-export class App extends Component {
-  static propTypes = {
-    good: PropTypes.number,
-    bad: PropTypes.number,
-    neutral: PropTypes.number,
-  };
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
-  options = ['good', 'neutral', 'bad'];
-  leaveFeedback = option => {
+  const leaveFeedback = option => {
     const { value } = option.currentTarget;
-    this.setState(prevState => ({
-      ...prevState,
-      [value]: prevState[value] + 1,
-    }));
+    switch (value) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+        return;
+    }
   };
 
-  countTotalFeedback = () => {
-    let total = this.state.bad + this.state.good + this.state.neutral;
+  const countTotalFeedback = () => {
+    let total = bad + good + neutral;
     return total;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    let positive = Math.round(
-      (this.state.good / this.countTotalFeedback()) * 100
-    );
+  const countPositiveFeedbackPercentage = () => {
+    let positive = Math.round((good / countTotalFeedback()) * 100);
     return positive;
   };
+  return (
+    <>
+      <Feedback
+        options={options}
+        onLeaveFeedback={leaveFeedback}
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={countTotalFeedback()}
+        positivePercentage={countPositiveFeedbackPercentage()}
+      />
+    </>
+  );
+};
 
-  render() {
-    return (
-      <>
-        <Feedback
-          options={this.options}
-          onLeaveFeedback={this.leaveFeedback}
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />
-      </>
-    );
-  }
-}
+App.propTypes = {
+  good: PropTypes.number,
+  bad: PropTypes.number,
+  neutral: PropTypes.number,
+};
